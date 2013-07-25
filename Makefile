@@ -1,6 +1,5 @@
 BIN=fft_eval
 OBJ=fft_eval.o
-LIBS=-lSDL -lSDL_ttf
 CC=gcc -O2 -Wall -pedantic
 LD=gcc
 .SUFFIXES: .o .c
@@ -11,7 +10,7 @@ default:	all
 all:	$(BIN)
 
 $(BIN): $(OBJ)
-	$(LD) $(LIBS) -o $@ $(OBJ)
+	$(LD) -o $@ $(OBJ) -lm
 
 clean:
 	rm -rf $(BIN) $(OBJ)

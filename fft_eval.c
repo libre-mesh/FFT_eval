@@ -95,17 +95,11 @@ int scanresults_n = 0;
 #define SIZE 3
 
 /*
- * draw_picture - draws the current screen.
- *
- * @highlight: the index of the dataset to be highlighted
- *
- * returns the center frequency of the currently highlighted dataset
+ * print_values - spit out the analyzed values in text form, JSON-like.
  */
-int draw_picture(int highlight, int startfreq)
+int print_values(int unused)
 {
-	int x, y, i, rnum;
-	int highlight_freq = startfreq + 20;
-	char text[1024];
+	int i, rnum;
 	struct scanresult *result;
 
 	rnum = 0;
@@ -154,7 +148,7 @@ int draw_picture(int highlight, int startfreq)
 		rnum++;
 	}
 
-	return highlight_freq;
+	return 0;
 }
 
 /* read_file - reads an file into a big buffer and returns it
@@ -252,21 +246,6 @@ int read_scandata(char *fname)
 	return 0;
 }
 
-/*
- * graphics_main - sets up the data and holds the mainloop.
- *
- */
-void graphics_main(void)
-{
-	int quit = 0;
-	int highlight = 0;
-	int change = 1, scroll = 0;
-	int startfreq = 2350, accel = 0;
-	int highlight_freq = startfreq;
-
-	highlight_freq = draw_picture(highlight, startfreq);
-}
-
 void usage(int argc, char *argv[])
 {
 	fprintf(stderr, "Usage: %s [scanfile]\n", argv[0]);
@@ -301,7 +280,7 @@ int main(int argc, char *argv[])
 		usage(argc, argv);
 		return -1;
 	}
-	graphics_main();
+	print_values(0);
 
 	return 0;
 }

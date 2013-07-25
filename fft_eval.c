@@ -120,7 +120,7 @@ int print_values(int unused)
 
 		/* prints some statistical data about the
 		 * data sample and auxiliary data. */
-		printf("{ \"tsf\": %"PRIu64", \"central_freq\": %04d, \"rssi\": %03d, \"noise\": %03d, \"data\": [\n", 
+		printf("{ \"tsf\": %"PRIu64", \"central_freq\": %d, \"rssi\": %d, \"noise\": %d, \"data\": [\n", 
 			result->sample.tsf, result->sample.freq, result->sample.rssi, result->sample.noise);
 
 		for (i = 0; i < SPECTRAL_HT20_NUM_BINS; i++) {

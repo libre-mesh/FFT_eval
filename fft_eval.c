@@ -123,18 +123,10 @@ int draw_picture(int highlight, int startfreq)
 			if (data < datamin) datamin = data;
 		}
 
-		if (rnum == highlight) {
-			/* prints some statistical data about the currently selected 
-			 * data sample and auxiliary data. */
-			printf("result[%03d]: freq %04d rssi %03d, noise %03d, max_magnitude %04d max_index %03d bitmap_weight %03d tsf %"PRIu64" | ", 
-				rnum, result->sample.freq, result->sample.rssi, result->sample.noise,
-				result->sample.max_magnitude, result->sample.max_index, result->sample.bitmap_weight,
-				result->sample.tsf);
-			printf("datamax = %d, datamin = %d, datasquaresum = %d\n", datamax, datamin, datasquaresum);
-
-			highlight_freq = result->sample.freq;
-		}
-
+		/* prints some statistical data about the
+		 * data sample and auxiliary data. */
+		printf("{ \"tsf\": %"PRIu64", \"central_freq\": %04d, \"rssi\": %03d, \"noise\": %03d, \"data\": [\n", 
+			result->sample.tsf, result->sample.freq, result->sample.rssi, result->sample.noise);
 
 		for (i = 0; i < SPECTRAL_HT20_NUM_BINS; i++) {
 			float freq;
@@ -150,7 +142,15 @@ int draw_picture(int highlight, int startfreq)
 				data = 1;
 			signal = result->sample.noise + result->sample.rssi + 20 * log10f(data) - log10f(datasquaresum) * 10;
 
+			printf("[ %f, %f ]", freq, signal);
+			if ( i < SPECTRAL_HT20_NUM_BINS - 1 )
+				printf(", ");
+			printf("\n");
 		}
+		printf("] }");
+		if ( result->next )
+			printf(",");
+		printf("\n");
 		rnum++;
 	}
 

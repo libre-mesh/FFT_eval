@@ -5,8 +5,8 @@ This program has been created to aid open source spectrum
 analyzer development for Qualcomm/Atheros AR92xx and AR93xx
 based chipsets. 
 
-It visualizes the FFT data reported by the chips to help intepreting
-and understanding the data.
+It dumps the FFT data reported by the chips in JSON format to
+help intepreting and understanding the data.
 
 TODO: The interpreted data format is unknown! Please help
 investigating the data, or help acquiring information about the
@@ -15,14 +15,13 @@ data format from Qualcomm Atheros!
 BUILD
 =====
 
-You need to have SDL and SDL_ttf development packages installed
-on your system, as well as make and gcc.
+You need to have make and gcc.
 
 Just type make to build the program:
 
 $ make
 gcc -O2 -Wall -pedantic -c -o fft_eval.o fft_eval.c
-gcc -lSDL -lSDL_ttf -o fft_eval fft_eval.o
+gcc -o fft_eval fft_eval.o -lm
 $
 
 USAGE
@@ -43,10 +42,6 @@ To view the FFT results, use:
 
 ./fft_eval /tmp/fft_results
 
-Navigate through the currently selected datasets using the arrow keys (left
-and right). Scroll through the spectrum using the Page Up/Down keys.
-
-
 LICENSE
 =======
 
@@ -57,3 +52,4 @@ AUTHOR
 
 This software has been written by Simon Wunderlich <siwu@hrz.tu-chemnitz.de>
 for Fraunhofer-Gesellschaft zur Foerderung der angewandten Forschung e.V.
+and then adapted (stripped SDL code) by Gui Iribarren <gui@altermundi.net>

@@ -103,6 +103,7 @@ int print_values(int unused)
 	int i, rnum;
 	struct scanresult *result;
 
+	printf("[");
 	rnum = 0;
 	for (result = result_list; result ; result = result->next) {
 		int datamax = 0, datamin = 65536;
@@ -120,7 +121,7 @@ int print_values(int unused)
 
 		/* prints some statistical data about the
 		 * data sample and auxiliary data. */
-		printf("{ \"tsf\": %"PRIu64", \"central_freq\": %d, \"rssi\": %d, \"noise\": %d, \"data\": [\n", 
+		printf("\n{ \"tsf\": %"PRIu64", \"central_freq\": %d, \"rssi\": %d, \"noise\": %d, \"data\": [ ",
 			result->sample.tsf, result->sample.freq, result->sample.rssi, result->sample.noise);
 
 		for (i = 0; i < SPECTRAL_HT20_NUM_BINS; i++) {
@@ -140,14 +141,13 @@ int print_values(int unused)
 			printf("[ %f, %f ]", freq, signal);
 			if ( i < SPECTRAL_HT20_NUM_BINS - 1 )
 				printf(", ");
-			printf("\n");
 		}
-		printf("] }");
+		printf(" ] }");
 		if ( result->next )
 			printf(",");
-		printf("\n");
 		rnum++;
 	}
+	printf("\n]\n");
 
 	return 0;
 }

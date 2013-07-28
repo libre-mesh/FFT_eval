@@ -98,7 +98,7 @@ int scanresults_n = 0;
 /*
  * print_values - spit out the analyzed values in text form, JSON-like.
  */
-int print_values(int unused)
+void print_values()
 {
 	int i, rnum;
 	struct scanresult *result;
@@ -281,7 +281,7 @@ int main(int argc, char *argv[])
 		usage(argc, argv);
 		return -1;
 	}
-	print_values(0);
+	print_values();
 
 	return 0;
 }

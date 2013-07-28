@@ -74,26 +74,8 @@ struct scanresult {
 	struct scanresult *next;
 };
 
-#define WIDTH	1600
-#define HEIGHT	650
-#define BPP	32
-
-#define X_SCALE	10
-#define Y_SCALE	4
-
-#define	RMASK 	0x000000ff
-#define RBITS	0
-#define	GMASK	0x0000ff00
-#define GBITS	8
-#define	BMASK	0x00ff0000
-#define	BBITS	16
-#define	AMASK	0xff000000
-
-
 struct scanresult *result_list;
 int scanresults_n = 0;
-
-#define SIZE 3
 
 /*
  * print_values - spit out the analyzed values in text form, JSON-like.

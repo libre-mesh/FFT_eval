@@ -74,35 +74,18 @@ struct scanresult {
 	struct scanresult *next;
 };
 
-#define WIDTH	1600
-#define HEIGHT	650
-#define BPP	32
-
-#define X_SCALE	10
-#define Y_SCALE	4
-
-#define	RMASK 	0x000000ff
-#define RBITS	0
-#define	GMASK	0x0000ff00
-#define GBITS	8
-#define	BMASK	0x00ff0000
-#define	BBITS	16
-#define	AMASK	0xff000000
-
-
 struct scanresult *result_list;
 int scanresults_n = 0;
-
-#define SIZE 3
 
 /*
  * print_values - spit out the analyzed values in text form, JSON-like.
  */
-int print_values(int unused)
+void print_values()
 {
 	int i, rnum;
 	struct scanresult *result;
 
+	printf("[");
 	rnum = 0;
 	for (result = result_list; result ; result = result->next) {
 		int datamax = 0, datamin = 65536;
@@ -120,7 +103,7 @@ int print_values(int unused)
 
 		/* prints some statistical data about the
 		 * data sample and auxiliary data. */
-		printf("{ \"tsf\": %"PRIu64", \"central_freq\": %04d, \"rssi\": %03d, \"noise\": %03d, \"data\": [\n", 
+		printf("\n{ \"tsf\": %"PRIu64", \"central_freq\": %d, \"rssi\": %d, \"noise\": %d, \"data\": [ ",
 			result->sample.tsf, result->sample.freq, result->sample.rssi, result->sample.noise);
 
 		for (i = 0; i < SPECTRAL_HT20_NUM_BINS; i++) {
@@ -140,14 +123,13 @@ int print_values(int unused)
 			printf("[ %f, %f ]", freq, signal);
 			if ( i < SPECTRAL_HT20_NUM_BINS - 1 )
 				printf(", ");
-			printf("\n");
 		}
-		printf("] }");
+		printf(" ] }");
 		if ( result->next )
 			printf(",");
-		printf("\n");
 		rnum++;
 	}
+	printf("\n]\n");
 
 	return 0;
 }
@@ -281,7 +263,7 @@ int main(int argc, char *argv[])
 		usage(argc, argv);
 		return -1;
 	}
-	print_values(0);
+	print_values();
 
 	return 0;
 }
